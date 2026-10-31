@@ -1,0 +1,50 @@
+{
+  "manifest_version": 3,
+  "name": "Snaps Screenshot & Editor",
+  "short_name": "Snaps",
+  "version": "1.0.0",
+  "description": "Screenshot any area, the visible page or a full scrolling page. Annotate, blur, copy or save. Private and 100% offline.",
+  "minimum_chrome_version": "111",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "Snaps – take a screenshot",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "unlimitedStorage",
+    "downloads",
+    "clipboardWrite",
+    "contextMenus"
+  ],
+  "commands": {
+    "capture-area": {
+      "suggested_key": { "default": "Alt+Shift+A", "mac": "Alt+Shift+A" },
+      "description": "Capture a selected area (Lightshot style)"
+    },
+    "capture-visible": {
+      "suggested_key": { "default": "Alt+Shift+V", "mac": "Alt+Shift+V" },
+      "description": "Capture the visible part of the page"
+    },
+    "capture-full": {
+      "suggested_key": { "default": "Alt+Shift+F", "mac": "Alt+Shift+F" },
+      "description": "Capture the full scrolling page"
+    }
+  }
+}

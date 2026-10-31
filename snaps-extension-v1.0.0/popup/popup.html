@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Snaps</title>
+  <link rel="stylesheet" href="../lib/theme.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="appbar">
+    <svg class="logo" viewBox="0 0 48 48" width="36" height="36" aria-hidden="true">
+      <rect width="48" height="48" rx="11" fill="#fff"/>
+      <path d="M14 20v-4a2 2 0 012-2h4M28 14h4a2 2 0 012 2v4M34 28v4a2 2 0 01-2 2h-4M20 34h-4a2 2 0 01-2-2v-4" style="stroke:var(--a1)" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <circle cx="24" cy="24" r="4.6" style="fill:var(--a1)"/>
+    </svg>
+    <div class="title">
+      <h1>Snaps</h1>
+      <p>Screenshot &amp; editor</p>
+    </div>
+    <button class="btn icon" id="openGallery" title="Open gallery" aria-label="Open gallery"></button>
+  </header>
+
+  <main class="pop">
+    <div class="alert" id="warn" hidden>
+      <span data-icon="warning"></span>
+      <span>Chrome doesn’t allow captures on this page. Switch to a normal website tab.</span>
+    </div>
+
+    <section class="paper list" id="actions">
+      <button class="act li" data-mode="area">
+        <span class="avatar" data-icon="area"></span>
+        <span class="txt"><b>Select area</b><small>Drag a region, annotate and copy</small></span>
+        <span class="keys" data-cmd="capture-area"></span>
+      </button>
+      <button class="act li" data-mode="visible">
+        <span class="avatar" data-icon="visible"></span>
+        <span class="txt"><b>Visible part</b><small>Capture what’s on screen now</small></span>
+        <span class="keys" data-cmd="capture-visible"></span>
+      </button>
+      <button class="act li" data-mode="full">
+        <span class="avatar" data-icon="full"></span>
+        <span class="txt"><b>Full page</b><small>Auto-scroll and stitch the page</small></span>
+        <span class="keys" data-cmd="capture-full"></span>
+      </button>
+    </section>
+
+    <section class="row-between">
+      <span class="label"><span data-icon="timer"></span>Timer</span>
+      <div class="seg" id="segDelay"></div>
+    </section>
+
+    <section>
+      <div class="rhead"><span class="overline">Recent captures</span><a href="#" id="viewAll" class="link">View all</a></div>
+      <div class="strip" id="strip"></div>
+    </section>
+
+    <section class="paper prefs">
+      <div class="prow"><span class="label">After capture</span><div class="seg" id="segAfter"></div></div>
+      <div class="prow"><span class="label">Save as</span><div class="seg" id="segFormat"></div></div>
+      <div class="prow"><span class="label">Theme colour</span><div class="swatches" id="swatches"></div></div>
+    </section>
+
+    <footer class="foot">
+      <a href="#" id="shortcuts"><span data-icon="keyboard"></span>Customize shortcuts</a>
+      <span>Private · works offline</span>
+    </footer>
+  </main>
+  <script src="../lib/icons.js"></script>
+  <script src="../lib/ripple.js"></script>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

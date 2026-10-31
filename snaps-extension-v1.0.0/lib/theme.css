@@ -1,0 +1,194 @@
+/* Snaps – Material Design theme (light + dark, follows the system setting) */
+@font-face { font-family: "Roboto"; font-style: normal; font-weight: 400; font-display: swap; src: url("../fonts/roboto-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Roboto"; font-style: normal; font-weight: 500; font-display: swap; src: url("../fonts/roboto-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Roboto"; font-style: normal; font-weight: 700; font-display: swap; src: url("../fonts/roboto-latin-700-normal.woff2") format("woff2"); }
+
+:root {
+  color-scheme: light dark;
+  --font: "Roboto", "Helvetica Neue", Arial, system-ui, sans-serif;
+
+  /* primary (overridden by the chosen accent) */
+  --a1: #1976d2;
+  --a1-rgb: 25, 118, 210;
+  --a2: #1976d2;
+  --a2-rgb: 25, 118, 210;
+  --primary-hover: color-mix(in srgb, var(--a1) 86%, #000);
+  --primary-text: var(--a1);
+
+  /* light palette */
+  --bg: #f5f5f5;
+  --paper: #ffffff;
+  --paper-2: #fafafa;
+  --fg: rgba(0, 0, 0, 0.87);
+  --muted: rgba(0, 0, 0, 0.6);
+  --disabled: rgba(0, 0, 0, 0.38);
+  --line: rgba(0, 0, 0, 0.12);
+  --hover: rgba(0, 0, 0, 0.04);
+  --press: rgba(0, 0, 0, 0.1);
+  --stage: #e0e0e0;
+  --check-a: #d4d4d4;
+  --check-b: #e8e8e8;
+  --appbar-bg: var(--a1);
+  --appbar-fg: #ffffff;
+  --snack-bg: #323232;
+  --ring: rgba(0, 0, 0, 0.22);
+  --alert-bg: #fdeded;
+  --alert-fg: #5f2120;
+  --info-bg: #e8f1fb;
+  --info-fg: #0d3c61;
+
+  /* toolbar tokens (shared with the in-page overlay) */
+  --sn-icon: rgba(0, 0, 0, 0.6);
+  --sn-hover: rgba(0, 0, 0, 0.06);
+  --sn-active-bg: rgba(var(--a1-rgb), 0.14);
+  --sn-active-fg: var(--a1);
+  --sn-ring: rgba(0, 0, 0, 0.24);
+  --panel: #ffffff;
+
+  /* elevation */
+  --e1: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+  --e2: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  --e4: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+  --e8: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+  --e16: 0 8px 10px -5px rgba(0,0,0,.2), 0 16px 24px 2px rgba(0,0,0,.14), 0 6px 30px 5px rgba(0,0,0,.12);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-text: color-mix(in srgb, var(--a1) 50%, #fff);
+    --bg: #121212;
+    --paper: #1e1e1e;
+    --paper-2: #242424;
+    --fg: #ffffff;
+    --muted: rgba(255, 255, 255, 0.7);
+    --disabled: rgba(255, 255, 255, 0.5);
+    --line: rgba(255, 255, 255, 0.12);
+    --hover: rgba(255, 255, 255, 0.08);
+    --press: rgba(255, 255, 255, 0.16);
+    --stage: #0e0e0e;
+    --check-a: #1b1b1b;
+    --check-b: #242424;
+    --appbar-bg: #272727;
+    --snack-bg: #e0e0e0;
+    --ring: rgba(255, 255, 255, 0.3);
+    --alert-bg: #2a1413;
+    --alert-fg: #f5c6c4;
+    --info-bg: #10243a;
+    --info-fg: #b9dcfb;
+    --sn-icon: rgba(255, 255, 255, 0.72);
+    --sn-hover: rgba(255, 255, 255, 0.1);
+    --sn-active-bg: rgba(var(--a1-rgb), 0.3);
+    --sn-active-fg: color-mix(in srgb, var(--a1) 45%, #fff);
+    --sn-ring: rgba(255, 255, 255, 0.34);
+    --panel: #1e1e1e;
+  }
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }   /* component display rules must never override the hidden attribute */
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
+  -webkit-font-smoothing: antialiased;
+}
+button { font: inherit; color: inherit; }
+a { color: var(--primary-text); }
+::selection { background: rgba(var(--a1-rgb), 0.3); }
+
+/* ---------- surfaces ---------- */
+.paper { background: var(--paper); border-radius: 4px; box-shadow: var(--e1); }
+.glass { background: var(--paper); box-shadow: var(--e1); }   /* legacy alias */
+
+.appbar {
+  display: flex; align-items: center; gap: 8px; min-height: 56px; padding: 0 16px;
+  background: var(--appbar-bg); color: var(--appbar-fg); box-shadow: var(--e4);
+}
+.appbar .btn { color: inherit; }
+.appbar .btn:hover { background: rgba(255, 255, 255, 0.12); }
+.appbar .btn.icon { color: inherit; }
+.appbar .btn.on { background: rgba(255, 255, 255, 0.2); }
+
+.overline { font-size: 12px; font-weight: 500; letter-spacing: 0.08333em; text-transform: uppercase; color: var(--muted); }
+
+/* ---------- buttons (MUI style) ---------- */
+.btn {
+  position: relative; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-width: 64px; height: 36px; padding: 0 16px; border: 0; border-radius: 4px; cursor: pointer;
+  background: transparent; color: var(--primary-text); text-decoration: none;
+  font: 500 14px/1.75 var(--font); letter-spacing: 0.02857em; text-transform: uppercase; white-space: nowrap;
+  transition: background-color 0.15s, box-shadow 0.15s, color 0.15s;
+}
+.btn:hover { background: rgba(var(--a1-rgb), 0.08); }
+.btn:disabled { color: var(--disabled); cursor: default; background: transparent; }
+.btn svg { flex: none; }
+.btn.primary { background: var(--a1); color: #fff; box-shadow: var(--e2); }
+.btn.primary:hover { background: var(--primary-hover); box-shadow: var(--e4); }
+.btn.outlined { border: 1px solid rgba(var(--a1-rgb), 0.5); }
+.btn.icon {
+  min-width: 0; width: 40px; height: 40px; padding: 0; border-radius: 50%; color: var(--muted);
+}
+.btn.icon:hover { background: var(--hover); color: var(--fg); }
+.btn.icon.primary { color: #fff; background: var(--a1); box-shadow: var(--e2); }
+.btn.sm { height: 30px; padding: 0 10px; font-size: 13px; }
+.btn.icon.sm { width: 32px; height: 32px; padding: 0; }
+.btn.on { background: rgba(var(--a1-rgb), 0.16); color: var(--primary-text); }
+.btn.danger:hover { background: rgba(244, 67, 54, 0.12); color: #f44336; }
+
+kbd {
+  display: inline-block; min-width: 20px; padding: 1px 6px; border-radius: 4px; text-align: center;
+  font: 500 11px/1.6 var(--font); background: var(--paper-2); border: 1px solid var(--line); color: var(--muted);
+}
+
+/* ---------- ripple ---------- */
+.rpl { position: absolute; border-radius: 50%; background: currentColor; opacity: 0.22; pointer-events: none; transform: scale(0); animation: rpl 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+@keyframes rpl { to { transform: scale(1); opacity: 0; } }
+
+/* ---------- toggle button group ---------- */
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; background: transparent; padding: 0; gap: 0; }
+.seg button {
+  position: relative; overflow: hidden; border: 0; border-left: 1px solid var(--line); background: transparent; color: var(--muted);
+  min-height: 32px; padding: 0 12px; cursor: pointer; font: 500 13px/1 var(--font); letter-spacing: 0.02857em; text-transform: uppercase;
+  transition: background-color 0.15s, color 0.15s;
+}
+.seg button:first-child { border-left: 0; }
+.seg button:hover { background: var(--hover); }
+.seg button.on { background: rgba(var(--a1-rgb), 0.14); color: var(--primary-text); }
+
+/* ---------- switch ---------- */
+.switch { position: relative; display: inline-block; width: 42px; height: 24px; cursor: pointer; flex: none; }
+.switch input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; z-index: 1; }
+.switch i { position: absolute; left: 4px; right: 4px; top: 5px; bottom: 5px; border-radius: 7px; background: var(--disabled); transition: background-color 0.15s; opacity: 0.6; }
+.switch i::after {
+  content: ""; position: absolute; left: -4px; top: -3px; width: 20px; height: 20px; border-radius: 50%;
+  background: #fafafa; box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+  transition: transform 0.15s, background-color 0.15s;
+}
+.switch input:checked + i { background: var(--a1); opacity: 0.5; }
+.switch input:checked + i::after { transform: translateX(18px); background: var(--a1); opacity: 1; }
+@media (prefers-color-scheme: dark) { .switch i::after { background: #bdbdbd; } }
+
+/* ---------- chips ---------- */
+.chip {
+  display: inline-flex; align-items: center; height: 24px; padding: 0 9px; border-radius: 12px; font-size: 12px; font-weight: 500;
+  background: rgba(var(--a1-rgb), 0.12); color: var(--primary-text); letter-spacing: 0.02em;
+}
+
+/* ---------- snackbar ---------- */
+.toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 99; min-width: 220px; max-width: calc(100vw - 32px);
+  transform: translate(-50%, 16px); opacity: 0; pointer-events: none;
+  display: flex; align-items: center; gap: 12px; padding: 6px 16px; min-height: 48px; border-radius: 4px;
+  background: var(--snack-bg); color: #fff; font-size: 14px; box-shadow: var(--e8);
+  transition: opacity 0.2s, transform 0.2s;
+}
+@media (prefers-color-scheme: dark) { .toast { color: rgba(0, 0, 0, 0.87); } }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast .dot { display: none; }
+
+/* ---------- scrollbars ---------- */
+* { scrollbar-width: thin; scrollbar-color: var(--ring) transparent; }

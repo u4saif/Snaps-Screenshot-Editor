@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Snaps Editor</title>
+  <link rel="stylesheet" href="../lib/theme.css">
+  <link rel="stylesheet" href="editor.css">
+</head>
+<body>
+  <header class="appbar" id="appbar">
+    <svg class="logo" viewBox="0 0 48 48" width="32" height="32" aria-hidden="true">
+      <rect width="48" height="48" rx="11" fill="#fff"/>
+      <path d="M14 20v-4a2 2 0 012-2h4M28 14h4a2 2 0 012 2v4M34 28v4a2 2 0 01-2 2h-4M20 34h-4a2 2 0 01-2-2v-4" style="stroke:var(--a1)" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <circle cx="24" cy="24" r="4.6" style="fill:var(--a1)"/>
+    </svg>
+    <h1 class="brand">Snaps</h1>
+    <div class="meta" id="meta"></div>
+    <div class="tgroup" id="imgTools">
+      <button class="btn icon" id="btnCrop" title="Crop (Enter to apply)" aria-label="Crop"></button>
+      <button class="btn icon" id="btnRotL" title="Rotate left" aria-label="Rotate left"></button>
+      <button class="btn icon" id="btnRotR" title="Rotate right" aria-label="Rotate right"></button>
+      <button class="btn icon" id="btnFlipH" title="Flip horizontally" aria-label="Flip horizontally"></button>
+      <button class="btn icon" id="btnClear" title="Remove all annotations" aria-label="Remove all annotations"></button>
+    </div>
+    <div class="spacer"></div>
+    <div class="tgroup">
+      <button class="btn" id="btnBeauty" title="Add a backdrop, shadow & window frame"><span data-icon="sparkle"></span>Beautify</button>
+      <button class="btn icon" id="btnSave" title="Save a copy to the gallery" aria-label="Save to gallery"></button>
+      <button class="btn" id="btnCopy" title="Copy image (Ctrl+C)"><span data-icon="copy"></span>Copy</button>
+      <div class="split">
+        <button class="btn primary" id="btnDownload" title="Download (Ctrl+S)"><span data-icon="download"></span><span id="dlLabel">PNG</span></button>
+        <button class="btn primary" id="btnFmt" title="Choose format" aria-label="Choose format"><span data-icon="chevron"></span></button>
+        <div class="menu paper" id="fmtMenu" hidden>
+          <button data-fmt="png"><span data-icon="image"></span>PNG <small>lossless</small></button>
+          <button data-fmt="jpg"><span data-icon="image"></span>JPG <small>smaller</small></button>
+          <button data-fmt="webp"><span data-icon="image"></span>WebP <small>modern</small></button>
+          <button data-fmt="pdf"><span data-icon="pdf"></span>PDF <small>document</small></button>
+        </div>
+      </div>
+      <a class="btn icon" id="btnGallery" href="../gallery/gallery.html" target="_blank" title="Open gallery" aria-label="Open gallery"></a>
+    </div>
+  </header>
+
+  <div class="workspace" id="app">
+    <aside class="side paper" id="side"></aside>
+
+    <section class="canvas-wrap" id="wrap">
+      <div class="host" id="host"><div class="stage" id="stage"></div></div>
+      <div class="empty" id="empty" hidden>
+        <div class="badge"></div>
+        <h2>Nothing to edit yet</h2>
+        <p>Capture a page with <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd>, or drop / paste an image here.</p>
+        <label class="btn primary">Choose an image<input type="file" id="fileIn" accept="image/*" hidden></label>
+      </div>
+    </section>
+
+    <aside class="panel paper" id="panel">
+      <section>
+        <h3 class="overline">Style</h3>
+        <div id="styleHost"></div>
+      </section>
+      <section id="beautySec">
+        <h3 class="overline">Beautify <label class="switch"><input type="checkbox" id="beautyOn" aria-label="Enable beautify"><i></i></label></h3>
+        <div class="bgrid" id="bgrid"></div>
+        <div class="slider"><span>Padding</span><input type="range" id="rPad" min="0" max="160" value="56"><output id="oPad">56</output></div>
+        <div class="slider"><span>Corners</span><input type="range" id="rRad" min="0" max="40" value="14"><output id="oRad">14</output></div>
+        <div class="slider"><span>Shadow</span><input type="range" id="rSha" min="0" max="80" value="34"><output id="oSha">34</output></div>
+        <div class="prow"><span>Window</span><div class="seg" id="segFrame"></div></div>
+      </section>
+      <section>
+        <h3 class="overline">Details</h3>
+        <dl class="info" id="info"></dl>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="status" id="status">
+    <div class="zoom">
+      <button class="btn icon sm" id="zOut" title="Zoom out (Ctrl + −)" aria-label="Zoom out"></button>
+      <span id="zLabel">100%</span>
+      <button class="btn icon sm" id="zIn" title="Zoom in (Ctrl + +)" aria-label="Zoom in"></button>
+      <button class="btn sm" id="zFit" title="Fit to window (Ctrl+0)"></button>
+      <button class="btn sm" id="z100" title="Actual size">1:1</button>
+    </div>
+    <div class="hint">
+      <kbd>V</kbd> move &nbsp; <kbd>A</kbd> arrow &nbsp; <kbd>T</kbd> text &nbsp; <kbd>B</kbd> blur &nbsp;·&nbsp; <kbd>Ctrl</kbd>+<kbd>Z</kbd> undo &nbsp;·&nbsp; paste or drop an image anytime
+    </div>
+  </footer>
+
+  <div class="cropbar paper" id="cropbar" hidden>
+    <span>Drag the handles to crop</span>
+    <button class="btn" id="cropCancel">Cancel</button>
+    <button class="btn primary" id="cropApply"><span data-icon="check"></span>Apply</button>
+  </div>
+
+  <div class="toast" id="toast"><span id="toastText"></span></div>
+
+  <script src="../lib/icons.js"></script>
+  <script src="../lib/ripple.js"></script>
+  <script src="../lib/editor-core.js"></script>
+  <script type="module" src="editor.js"></script>
+</body>
+</html>
