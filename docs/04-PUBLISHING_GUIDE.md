@@ -13,10 +13,12 @@
 4. Turn on 2-step verification – it's required to publish.
 
 ## 2. Host the privacy policy
-Easiest free option: GitHub Pages.
-1. Create a public repo (e.g. `snaps-privacy`), upload `privacy-policy.html` renamed to `index.html`.
-2. Settings → Pages → deploy from `main` branch.
-3. Your URL: `https://<username>.github.io/snaps-privacy/`
+Repo is already pushed: https://github.com/u4saif/Snaps-Screenshot-Editor (main branch).
+1. On GitHub, go to **Settings → Pages**.
+2. Under **Build and deployment → Source**, choose **Deploy from a branch**.
+3. Branch: `main`, folder: **/ (root)** → **Save**.
+4. Wait 1-2 minutes for the first deploy, then check: https://u4saif.github.io/Snaps-Screenshot-Editor/docs/privacy-policy.html
+5. Use that URL as the privacy policy link in the Dev Console.
 
 ## 3. Upload the package
 1. Dev Console → **Add new item** → upload `snaps-extension-v1.0.0.zip`.
